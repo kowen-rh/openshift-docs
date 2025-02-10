@@ -1,0 +1,72 @@
+// Module included in the following assemblies:
+//
+// * disaster_recovery/about-disaster-recovery.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="dr-testing-restore-procedures_{context}"]
+= Testing restore procedures
+
+Testing the restore procedure is important to ensure that your automation and workload deal with the new cluster state gracefully. Due to the complex nature of etcd quorum and the `cluster-etcd-operator` attempting to mend automatically, it is often difficult to correctly bring your cluster into a broken enough state that it can be restored. Follow this procedure to test such a broken state.
+
+[WARNING]
+====
+You **must** have SSH access to the cluster. Your cluster may be entirely lost without SSH access.
+====
+
+.Prerequisites
+
+* SSH access to control plane hosts.
+* You have installed the {oc-first}.
+
+.Procedure
+
+. SSH into each of your non-recovery nodes and run the following commands:
++
+[source,terminal]
+====
+$ sudo /usr/local/bin/disable-etcd.sh
+====
++
+[source,terminal]
+====
+$ sudo rm -rf /var/lib/etcd
+====
++
+[source,terminal]
+====
+$ sudo systemctl disable kubelet.service
+====
+
+. Exit every SSH session.
+
+. Run the following command to ensure that your non-recovery nodes are in a `NOT READY` state:
++
+[source,terminal]
+====
+$ oc get nodes
+====
+
+. Follow the steps in "Restoring to a previous cluster state" in the "Additional resources" section to restore your cluster.
+
+. Once the cluster is restored and the API responds, SSH into each non-recovery node and enable the `kubelet` service:
++
+[source,terminal]
+====
+$ sudo systemctl enable kubelet.service
+====
+
+. Exit every SSH session.
+
+. Run the following command to observe your nodes coming back into the `READY` state:
++
+[source,terminal]
+====
+$ oc get nodes
+====
+
+. Run the following command to verify that etcd is available:
++
+[source,terminal]
+====
+$ oc get pods -n openshift-etcd
+====

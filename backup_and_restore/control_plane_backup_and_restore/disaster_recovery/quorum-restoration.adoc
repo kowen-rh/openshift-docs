@@ -1,0 +1,12 @@
+:_mod-docs-content-type: ASSEMBLY
+[id="dr-quorum-restoration"]
+= Quorum restoration
+include::_attributes/common-attributes.adoc[]
+:context: dr-quorum-restoration
+
+toc::[]
+
+Follow these steps if your cluster is offline due to etcd quorum loss.
+
+// Quorum restoration for high availability clusters
+include::modules/dr-restoring-etcd-quorum-ha.adoc[leveloffset=+1]

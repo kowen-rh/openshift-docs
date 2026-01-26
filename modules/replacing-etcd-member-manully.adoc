@@ -1,0 +1,21 @@
+// Module included in the following assemblies:
+//
+// * TODO: add backup-and-restore/ assembly
+// * etcd/etcd-backup-restore/replace-healthy-etcd-member.adoc
+
+:_mod-docs-content-type: PROCEDURE
+[id="replacing-etcd-member-manually_{context}"]
+= Replacing an etcd member manually
+
+Without the Machine API, the machine for the node to be replaced must be manually deleted and the replacement must be manually added to the cluster.
+
+.Prerequisites
+
+* TODO: What are the prerequisites for this procedure?
+
+.Procedure
+
+. TODO: Write this.
+
+// Resources:
+//   https://access.redhat.com/articles/6270901#how-to-replace-the-master-nodes-by-scaling-up-new-ones-3
